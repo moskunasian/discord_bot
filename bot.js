@@ -14,27 +14,19 @@ client.on('message' , message => {
 
     if (message.content === '!ranks')
     {
-        axios.all([axios.get('https://lolchess.gg/profile/na/iceman0160'),
-                   axios.get('https://lolchess.gg/profile/na/sanuksom')]).then(axios.spread((res1, res2) => {
-
-            cheer1 = cheerio.load(res1.data)
-            user1 = cheer1('span.profile__summoner__name')
-            console.log(cheer1(user1).text())
-        }))
+        currName = getUserInfo('iceman0160')
+        $ = cheerio.load(currName.data)
+        textData = $('span.profile__summoner__name')
+        message.reply($(textData).text())
     }
 
 
 }) ;
 
-/*
-axios.all([axios.get('https://lolchess.gg/profile/na/iceman0160'),
-           axios.get('https://lolchess.gg/profile/na/sanuksom')]).then(axios.spread((res1, res2) => {
 
-    cheer1 = cheerio.load(res1.data)
-    user1 = cheer1('span.profile__summoner__name')
-    console.log(cheer1(user1).text())
-
-})) ;
-*/
+function getUserInfo(userName)
+{
+    return axios.get('https://lolchess.gg/profile/na/' + userName)
+}
 
 client.login(process.env.BOT_TOKEN) ;
