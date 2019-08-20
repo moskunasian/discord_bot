@@ -14,19 +14,11 @@ client.on('message' , message => {
 
     if (message.content === '!ranks')
     {
-        currName = getUserInfo('iceman0160')
-        $ = cheerio.load(currName.data)
-        textData = $('span.profile__summoner__name')
-        message.reply($(textData).text())
+        message.reply('!ranks , not implemented yet. . .')
     }
 
 
 }) ;
 
-
-function getUserInfo(userName)
-{
-    return axios.get('https://lolchess.gg/profile/na/' + userName)
-}
 
 client.login(process.env.BOT_TOKEN) ;
