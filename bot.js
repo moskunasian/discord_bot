@@ -39,8 +39,7 @@ client.on('message' , message =>
             outputString += '\n' + (i + 1) + '. ' + outputList[i][0] + ' ' + outputList[i][1] + ' ' + outputList[i][2]
                          + ' ' + outputList[i][3] + 'LP'
         }
-        console.log('\nCurrent TFT Leaderboard:')
-        console.log(outputString)
+        message.reply('\nCurrent TFT Leaderboard:' + outputString)
     }
 
     // 'sort subset of list?'
