@@ -1,6 +1,6 @@
 {
-  "name": "Example",
-  "description": "Example",
+  "name": "",
+  "description": "",
   "version": "1.0.0",
   "main": "bot.js",
   "scripts": {
@@ -11,6 +11,7 @@
     "cheerio": "^1.0.0-rc.3",
     "discord.js": "^11.5.1",
     "es6-promise": "^4.2.8",
+    "heroku": "^7.28.0",
     "isomorphic-fetch": "^2.2.1",
     "request": "2.81.0",
     "request-promise": "^4.2.4"
