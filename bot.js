@@ -47,7 +47,7 @@ client.on('message' , message =>
     // divisions = ["4" , "3" , "2" , "1"]
     // individiual LP values
     let currNames = ["iceman0160" , "sanuksom" , "Rexox" , "Pentameme" ,
-                     'Swash' , 'K0BI' , 'Hisoka x Chrollo' , 'VioIation']
+                     'Swash' , 'K0BI' , 'Hisoka x Chrollo' , 'VioIation' , 'FattyTerps']
     let output = []
     let count = 0
 
