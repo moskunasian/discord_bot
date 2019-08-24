@@ -3,11 +3,15 @@ const client = new Discord.Client()
 const cheerio = require('cheerio')
 const axios = require('axios')
 
-// to do: better method structure and modularity
+// to do:   better method structure and modularity
+//          better string formatting so resembles normal convention
+//          cleaner column formatting in leaderboard output
+//          add bot description / activity for better appearence on server
 
 client.on('ready' , () => {
 
     console.log('I am ready!')
+    client.user.setPresence(({name: 'Just TFT Tings...' , type: 0}))
 
 }) ;
 
@@ -32,21 +36,26 @@ client.on('message' , message =>
 
         // outputting testing
         let outputString = ''
+        let maxName = 0
         for (let i = 0 ; i < outputList.length ; i++)
         {
-            // to do: better string formatting here like in c/python
-            // also try to get columns so cleaner looking
-            outputString += '\n' + (i + 1) + '. ' + outputList[i][0] + ' ' + outputList[i][1] + ' ' + outputList[i][2]
-                         + ' ' + outputList[i][3] + 'LP'
+            if (outputList[i][0].length > maxName)
+                maxName = outputList[i][0].length
         }
-        message.reply('\nCurrent TFT Leaderboard:' + outputString)
+
+        for (let i = 0 ; i < outputList.length ; i++)
+        {
+            currLen = outputList[i][0].length
+            outputString += '\n' + (i + 1) + '. ' +
+                            outputList[i][0] + ': ' +
+                            outputList[i][1] + ' ' +
+                            outputList[i][2] + ' ' +
+                            outputList[i][3] + 'LP'
+        }
+        message.reply('\nCurrent TFT Leaderboard:\n---' + outputString + '\n---')
     }
 
-    // 'sort subset of list?'
-    // tiers = ["Iron"(1) , "Bronze"(2) , "Silver"(3) , "Gold"(4) , "Platinum"(5) , "Diamond"(6)]
-    // divisions = ["4" , "3" , "2" , "1"]
-    // individiual LP values
-    let currNames = ["iceman0160" , "sanuksom" , "Rexox" , "Pentameme" ,
+    let currNames = ["Snakebite0160" , "sanuksom" , "Rexox" , "Pentameme" ,
                      'Swash' , 'K0BI' , 'Hisoka x Chrollo' , 'VioIation' , 'FattyTerps']
     let output = []
     let count = 0
@@ -74,5 +83,5 @@ client.on('message' , message =>
     }
 }) ;
 
-
+client.login('NjEzMTc4MTY5OTg5NjYwNjcz.XVyCCg.4OC8R9SaSt3Cf0HYSZ3eluN6rJc')
 client.login(process.env.BOT_TOKEN)
