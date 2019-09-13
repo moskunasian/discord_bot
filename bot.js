@@ -13,6 +13,7 @@ client.on("ready" , () => {
 
 }) ;
 
+var rankCache = []
 
 // have !update command to refresh what is present in the output list
 // then have ranks , which will just output whatever was last in update command
@@ -23,7 +24,7 @@ client.on("message" , message =>
         var rankMap = {} ;
         rankTiers = ["Iron" , "Bronze" , "Silver" , "Gold" , "Platinum" , "Diamond"] ;
         for (let i = 0 ; i < rankTiers.length ; i++)
-            rankMap[rankTiers[i]] ;
+            rankMap[rankTiers[i]] = i ;
 
         outputList.sort(function(a , b)
         {
@@ -51,31 +52,32 @@ client.on("message" , message =>
         message.reply("\nCurrent TFT Leaderboard:\n---" + outputString + "\n---") ;
     }
 
-    let rankCache = []
-
     if (message.content == "!update")
     {
+        message.reply("\nRetrieving results...")
+        rankCache.length = 0
         var count = 0 ;
-        var currNames = ["Snakebite0160" , "sanuksom" , "Rexox" , "Pentameme" ,
+        var currNames = ["Snakebite0160" , "sanuksom" , "SlimChunk" , "Pentameme" ,
                          "Swash" , "K0BI" , "Hisoka x Chrollo" , "VioIation" , "FattyTerps"] ;
 
         for (let i = 0 ; i < currNames.length ; i++)
         {
-            axios.get("https://lolchess.gg/profile/na/" + currNames[i]).then(function(result)
+            axios.get('https://lolchess.gg/profile/na/' + currNames[i]).then(function(result)
             {
-                $ = cheerio.load(result.data)
-                userTier = $("span.profile.tier__summary__tier")
-                userDiv = $(userTier).text().slice(-1)
-                userTier = $(userTier).text().slice(0 , -2)
-                userName = $("span.profile__summoner__name")
-                userLP = $("span.profile__tier__summary__lp")
-                output.push([$(userName).text() , userTier , parseInt(userDiv) , parseInt($(userLP).text().slice(0 , 2))])
-                count++
+                $ = cheerio.load(result.data) ;
+                userTier = $("span.profile__tier__summary__tier") ;
+                userDiv = $(userTier).text().slice(-1) ;
+                userTier = $(userTier).text().slice(0 , -2) ;
+                userName = $("span.profile__summoner__name") ;
+                userLP = $("span.profile__tier__summary__lp") ;
+                rankCache.push([$(userName).text() , userTier , parseInt(userDiv) , parseInt($(userLP).text().slice(0 , 2))]) ;
+                count++ ;
 
                 if (count == currNames.length)
-                    message.reply("\nRanks successfully updated.")
+                    message.reply("\nRanks successfully updated!")
             })
         }
+
     }
 
     if (message.content === "!ranks")
